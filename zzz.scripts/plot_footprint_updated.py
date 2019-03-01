@@ -4,6 +4,7 @@ import sys, os
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 
 
@@ -81,31 +82,37 @@ def plot_footprints(filename, resindex_selected, resindex_remainder):
 
     ### For each zinc_id, read in the zinc_id.txt one by one
     for zinc_id in zinc_ids:
-        proper_lengths=True
         footprint = open(zinc_id.strip()+'.txt','r')
         lines = footprint.readlines()
         footprint.close()
-
+	
+	value_check_bool=False
         ### Store the resname, resid, and fp information appropriately
         resname = []; resid = []; vdw_ref = []; es_ref = []; vdw_pose = []; es_pose = []
         vdw_score = ""; es_score = ""
         vdw_energy = ""; es_energy = ""
+        for line in lines:
+	    ### When scores are too large & bleed into previous columns
+	    if (len(line.split()) > 3) and (len(line.split()) < 8):
+               value_check_bool=True
+        
+        if value_check_bool == True:
+            bad_val_output = (open('bad_val_id_list.txt','w'))
+            bad_val_output.write(zinc_id)
+            bad_val_output.close()
+            print("Bad value in ZINC ID:", zinc_id)
+            continue
 
         for line in lines:
             linesplit = line.split()
-            if (1 < len(linesplit) < 8) and ("#" not in line) and ("resname" not in line):
-                print(linesplit)
-                print(zinc_id)
-                proper_lengths=False
-                break
             if (len(linesplit) == 3):
                 if (linesplit[1] == 'desc_FPS_vdw_fps:'):
                     vdw_score = 'd = '+linesplit[2]
-                elif (linesplit[1] ==  'desc_FPS_es_fps:'):
+                if (linesplit[1] ==  'desc_FPS_es_fps:'):
                     es_score = 'd = '+linesplit[2]
-                elif (linesplit[1] == 'desc_FPS_vdw_energy:'):
+                if (linesplit[1] == 'desc_FPS_vdw_energy:'):
                     vdw_energy = 'vdw = '+linesplit[2]+' kcal/mol'
-                elif (linesplit[1] == 'desc_FPS_es_energy:'):
+                if (linesplit[1] == 'desc_FPS_es_energy:'):
                     es_energy = 'es = '+linesplit[2]+' kcal/mol'
             if (len(linesplit) == 8):
                 if (linesplit[0] != 'resname'):
@@ -115,8 +122,7 @@ def plot_footprints(filename, resindex_selected, resindex_remainder):
                     es_ref.append(float(linesplit[3]))
                     vdw_pose.append(float(linesplit[5]))
                     es_pose.append(float(linesplit[6]))
-        if proper_lengths==False:
-            continue
+
         ### Put the selected residues onto a selected array
         resname_selected = []
         vdw_ref_selected = []; es_ref_selected = []; vdw_pose_selected = []; es_pose_selected = []

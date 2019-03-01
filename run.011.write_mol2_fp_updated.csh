@@ -168,6 +168,7 @@ foreach score (dce_sum fps_es fps_sum fps_vdw totalScore fms_score vo_score hms_
 	end
 end
 
+mv ./temp/bad_val_id_list.txt .
 rm -rf temp/
 rm -f *zinc_codes.txt
 

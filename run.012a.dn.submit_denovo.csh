@@ -177,9 +177,9 @@ simplex_random_seed                                          0
 simplex_restraint_min                                        ${simplex_restraint_min}
 simplex_coefficient_restraint                                10.0
 atom_model                                                   all
-vdw_defn_file                                                ${dockdir}/parameters/vdw_de_novo.defn
-flex_defn_file                                               ${dockdir}/parameters/flex.defn
-flex_drive_file                                              ${dockdir}/parameters/flex_drive.tbl
+vdw_defn_file                                                ${DOCKHOMEWORK}/parameters/vdw_de_novo.defn
+flex_defn_file                                               ${DOCKHOMEWORK}/parameters/flex.defn
+flex_drive_file                                              ${DOCKHOMEWORK}/parameters/flex_drive.tbl
 eof
 
 ###############################################################################################################

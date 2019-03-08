@@ -124,7 +124,7 @@ echo "Writing footprint txt files for each scoring+group combo\n"
 
 mkdir temp/
 cd temp/
-python ${scriptdir}/break_into_fp.py ${rootdir}/${system}/010.moe-postprocess/${vendor}/${dockscore}_rank/${system}.${vendor}.${dockscore}_rank.unique_fp.txt
+python ${scriptdir}/break_into_fp.py ${rootdir}/${system}/010.moe-postprocess/${vendor}/${dockscore}_rank/${system}.${vendor}.${dockscore}_rank.total_fp.txt
 cd ../
 
 foreach score (dce_sum fps_es fps_sum fps_vdw totalScore fms_score vo_score hms_score descriptor_score)

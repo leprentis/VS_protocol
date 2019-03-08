@@ -79,13 +79,13 @@ cp ${rootdir}/${system}/009.descriptor-rescore/${vendor}/${score}_rank/${vendor}
 
 ### 1. Check for any duplicate ZINC names, and only keep the molecule with the best Footprint_Similarity_Score.
 echo "Checking for duplicate ZINC names..."
-perl ${scriptdir}/remove_duplicate_mol2s_update.pl ${system}.${vendor}.${score}_rank.total.mol2 ${system}.${vendor}.${score}_rank.total_fp.txt ${system}.${vendor}.${score}_rank.unique.mol2 ${system}.${vendor}.${score}_rank.unique_fp.txt
+#perl ${scriptdir}/remove_duplicate_mol2s_update.pl ${system}.${vendor}.${score}_rank.total.mol2 ${system}.${vendor}.${score}_rank.total_fp.txt ${system}.${vendor}.${score}_rank.total.mol2 ${system}.${vendor}.${score}_rank.total_fp.txt
 
 
 ### 2. Get scores and descriptors from docked mol2, sort by Descriptor_Score, and save top "max_num".
 ### (duplicates are also removed at this stage)
 echo "Getting descriptors from DOCK for the combined set..."
-python ${scriptdir}/dock_csv_updated_2_descriptor.norank.py ${system}.${vendor}.${score}_rank.unique.mol2 ${system}.${vendor}.${score}_rank ${max_num} 
+python ${scriptdir}/dock_csv_updated_2_descriptor.norank.py ${system}.${vendor}.${score}_rank.total.mol2 ${system}.${vendor}.${score}_rank ${max_num} 
 mv ${system}.${vendor}.${score}_rank_sorted_totScore_${max_num}.csv ${system}.${vendor}.${score}_rank.sorted_${score}_${max_num}_dock.csv
 rm -f ${system}.${vendor}.${score}_rank_sorted_totScore_all.csv 
 
@@ -101,7 +101,7 @@ rm -f ${system}.${vendor}.${score}_rank.${max_num}.codes_withheading.txt
 echo "Generating ranked mol2 file..."
 mkdir temp/
 cd temp/
-python ${scriptdir}/break_into_mol.py ../${system}.${vendor}.${score}_rank.unique.mol2
+python ${scriptdir}/break_into_mol.py ../${system}.${vendor}.${score}_rank.total.mol2
 
 foreach mol2 ( \` cat ../${system}.${vendor}.${score}_rank.sorted_${score}_${max_num}_codes.txt \` )
 	cat \${mol2}.mol2 >> ../${system}.${vendor}.${score}_rank.sorted_${score}_${max_num}_dock.mol2

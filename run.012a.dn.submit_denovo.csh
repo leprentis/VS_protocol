@@ -117,6 +117,7 @@ contact_score_primary                                        no
 contact_score_secondary                                      no
 grid_score_primary                                           no
 grid_score_secondary                                         no
+gist_score_primary                                           no
 multigrid_score_primary                                      no
 multigrid_score_secondary                                    no
 dock3.5_score_primary                                        no
@@ -203,6 +204,7 @@ contact_score_primary                                        no
 contact_score_secondary                                      no
 grid_score_primary                                           no
 grid_score_secondary                                         no
+gist_score_primary                                           no
 multigrid_score_primary                                      no
 multigrid_score_secondary                                    no
 dock3.5_score_primary                                        no
